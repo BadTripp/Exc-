@@ -1,3 +1,3 @@
 # Exc-
 Esempi c++ 
- Banale esercitazione c++
+Banali esercitazioni con c++
