@@ -1,0 +1,1323 @@
+#include<iostream>
+#include<string>
+#include<cstdlib>
+
+using namespace std;
+////////////////////////////////////FUNZIONI CASA////////////////////7
+int Controllo_Slot_Casa();
+int Controllo_Inserimento(int condizione);
+
+void Stampa_Casa();
+int Sistema_Casa();
+	int Sistema_Casa_Utilizza();
+	int Sistema_Casa_Deposita();
+	int Sistema_Casa_Allenati();
+	int Sistema_Casa_Studia();
+	int Sistema_Gestione_Inventario();
+	int Sistema_Movimento();
+
+
+void Stampa_Slot_Casa();
+void Stampa_Inventario();
+void Stampa_Logo();
+void Stampa_Tutorial(string testo1,string testo2);
+void Stampa_Pannello_Statistiche();
+/////////////////////////////////////FUNZIONI GESTIONE INVENTARIO //////////////////////
+int Sistema_Gestione_Inventario();
+	void Sistema_Sposta();
+	void Sistema_Elimina();
+/////////////////////////////////////FUNZIONI MOVIMENTO//////////////////////
+void Stampa_Movimento();
+int  Sistema_Movimento();
+	void Stampa_Movimento_Periferia();
+	void Stampa_Movimento_Centro();
+	void Stampa_Movimento_Banca();
+	void Stampa_Movimento_Energia();
+	void Stampa_Movimento_Attrezzi();
+	void Stampa_Movimento_Biciclette();
+	void Stampa_Movimento_Palestra();
+	void Stampa_Movimento_Concessionaria();
+	void Stampa_Movimento_Dipartimento();
+	void Stampa_Movimento_Casino();
+	void Stampa_Movimento_Parco();
+	void Stampa_Movimento_Chiesa();
+	void Stampa_Movimento_Terreni();
+	
+	int Sistema_Movimento_Periferia();
+	int Sistema_Movimento_Centro();
+	int Sistema_Movimento_Banca();
+	int Sistema_Movimento_Energia();
+	int Sistema_Movimento_Attrezzi();
+	int Sistema_Movimento_Biciclette();
+	int Sistema_Movimento_Palestra();
+	int Sistema_Movimento_Concessionaria();
+	int Sistema_Movimento_Dipartimento();
+	int Sistema_Movimento_Casino();
+	int Sistema_Movimento_Parco();
+	int Sistema_Movimento_Chiesa();
+	int Sistema_Movimento_Terreni();
+		void Controllo_Movimenti_Imprevisti(int comportamento);
+		void Comportamento_Spavaldo();
+		void Comportamento_Amichevole();
+		void Comportamento_Criminale();
+		void Comportamento_Gentile();
+		void Consumo_Energia();	
+////////////////////////////////////FUNZIONI SALVATAGGIO & CARICAMENTO PARTITA//////////////////////////////////////////////////7
+
+int Sistema_Salvataggio();
+
+////////////////////////////////////FUNZIONI PERSONAGGIO//////////////////////////////////////////////////7
+
+void Scheda_Personaggio();
+
+///////////////////////////////////////////////////////////VARIABILI GLOBALI DEL PERSONAGGIO///////////////////////////////7
+int Salute=100;
+int Denaro=200;
+int Sospetto=0;
+int Rispetto=0;
+int LivelloA=1;
+int AbilitaF=0;
+int Energia=100;
+string Inventario[9];
+int Inventario_Q[9];
+int Scuola=0;
+int VeicoloID=0;
+string Veicolo;
+int Conto=0;
+////////////////////////////////////////////////VARIABILI GLOBALI DELLA CASA//////////////////////////////////////////////////////////
+
+int TipoCasa=0;
+string OggettiCasa[1];
+int Oggetti_Casa_Q[1];
+
+//////////////////////////////////////////////VARIABILI DI AMMINISTRAZIONE GIOCO////////////////////////////////////////////////////////
+
+string Testo_Tutorial_1="Virtual Line e un gioco su riga di comando di tipo gestionale/simulatore ,\n ti permettera  di fare molte azioni possibili nella vita reale ma virtualmente";
+string Testo_Tutorial_2="Questa e la tua barra delle statistiche avra la maggior parte delle informazioni sul tuo conto nel gioco.";
+///////////////////////////////////////VEICOLI////////////////////////////////////////////
+
+
+
+
+/*
+	ID         Veicolo
+	0			Piedi
+	
+	1			Bicidapasseggio
+	2			Bicidasterrato
+	3			Bicidacorsa
+	
+	4			Catorcio
+	5			auto d'epoca
+	6			utilitaria
+	7			sportiva
+	8			dacorsa
+	
+	*/
+//////////////////////////////////////////////////OGGETTI///////////////////////////////////
+/*
+	ID 			Oggetto
+	0			mazza				
+	1			cacciavite
+	2			pesi
+	3			libro principianti
+	4			libro intermedi
+	5			libro esperti
+	6			semi 1
+	7			semi 2
+	8			semi 3
+	9			lattina
+	10			bottiglia piccola
+	11			bottiglia media 
+	12			bottiglia grande
+	13			telefono 
+	14			metaldetector
+	15			metallo 
+	16			legno 
+	17			pistola
+	18			fucile
+	19			mitra
+	20			zaino piccolo
+	21			zaino medio 
+	22			zaino grande 
+	
+*/
+
+
+int main()
+{
+	int Azione=0; 
+	
+	Stampa_Tutorial(Testo_Tutorial_1,Testo_Tutorial_2); //Visulizzazione dell'intero sistema di tutorial iniziale
+	system("cls");
+	while (Azione!=999)
+	{
+		switch(Azione)
+		{
+			case 0:
+				Azione=Sistema_Casa();
+				break;
+			case 2:
+				Azione=Sistema_Movimento();
+				break;
+		}
+	
+		
+	}
+	
+	
+	
+		
+}
+void Stampa_Logo()
+{
+	cout<<" _   _ _      _               _   _     _              "<<endl;
+	cout<<"| | | (_)    | |             | | | |   (_)             "<<endl;
+	cout<<"| | | |_ _ __| |_ _   _  __ _| | | |    _ _ __   ___   "<<endl;
+	cout<<"| | | | |  __| __| | | || _|  | | | |  | |  _  || _ | "<<endl;
+	cout<<"| |_| | | |  | |_| |_| | (_| | | | |___| | | | |  __|  "<<endl;
+	cout<<" |___||_|_|   |__||__,_||__,_|_| |_____|_|_| |_||___|  "<<endl;
+	cout<<"                                                       "<<endl;
+	cout<<"                                                       "<<endl;
+}
+void Stampa_Tutorial(string testo1,string testo2)
+{
+	int cond;
+	Stampa_Logo();
+	cout<<"Breve tutorial"<<endl;
+	cout<<testo1<<endl;
+	cout<<endl;
+	cout<<testo2<<endl;
+	Stampa_Pannello_Statistiche();
+	cout<<endl;
+	cout<<endl;
+	cout<<"Il resto lo scoprirai andando avanti inserendo 1"<<endl;
+	cond=1;
+	Controllo_Inserimento(cond);
+	
+}
+void Stampa_Pannello_Statistiche()
+{
+	cout<<"__________________________________________________________"<<endl;
+	cout<<" |Salute:"<<Salute<<"   |Denaro:"<<Denaro<<"               |Sospetto:"<<Sospetto<<"     |Energia:"<<Energia<<endl;
+	
+	cout<<" |Rispetto:"<<Rispetto<<"   |Livello apprendimento:"<<LivelloA<<"  |Abilita fisica:"<<AbilitaF<<endl;
+	cout<<"__________________________________________________________"<<endl;
+}
+int Controllo_Inserimento(int condizione)
+{
+	int comando,c=0;
+	do
+	{
+		
+		if(c!=0)
+		{
+			cout<<"Comando errato o non riconosciuto"<<endl;
+		}
+		c++;
+		cin>>comando;
+		
+	}while(comando>condizione);
+	return comando;
+}
+void Stampa_Casa ()
+{
+	cout<<"Benvenuto nella tua casa"<<endl;
+	cout<<"Azioni Disponibili"<<endl;
+	cout<<"[1]Esci"<<endl;
+	cout<<"[2]Utilizza"<<endl;
+	cout<<"[3]Deposita"<<endl;
+	cout<<"[4]Allenati"<<endl;
+	cout<<"[5]Studia"<<endl;
+	cout<<"[6]GestioneInventario"<<endl;
+	cout<<"[7]Salvataggio"<<endl;
+	
+	
+}
+int Sistema_Casa()
+{	
+
+	int com=7,Uscita,comando,rip=1;
+	
+	while (rip==1)
+{
+	system("cls");  
+	Stampa_Logo();
+	Stampa_Pannello_Statistiche();
+	Stampa_Casa();
+	comando=Controllo_Inserimento(com);
+	switch(comando)
+	{
+		case 1:
+			Uscita=2;
+			rip=2;
+			break;
+		case 2:
+			rip=Sistema_Casa_Utilizza();
+			break;
+		case 3:
+			rip=Sistema_Casa_Deposita();
+			break;
+		case 4:
+			rip=Sistema_Casa_Allenati();
+			break;
+		case 5:
+			rip=Sistema_Casa_Studia();
+			break;
+		case 6:
+			rip=Sistema_Gestione_Inventario();
+			break;
+		case 7:
+			rip=Sistema_Salvataggio();
+			break;
+		
+	
+		
+	}
+}
+	
+	return Uscita;
+}
+int Sistema_Casa_Utilizza()
+{
+    system("cls");
+	int Slot,con,uscita;
+	
+	Slot=Controllo_Slot_Casa();
+	cout<<"Inserisci il numero della slot da utilizzare"<<endl;
+	cout<<"Altrimenti scrivi |00| per tornare al menu"<<endl;
+	cout<<"SLOT CASA"<<endl;  
+	for(int count=0;count<Slot;count++)
+	{
+		if(OggettiCasa[count]=="")
+			OggettiCasa[count]="Vuoto";
+		cout<<"|"<<count<<"|"<<OggettiCasa[count]<<endl;
+	}
+	
+	con=Slot;
+	con=Controllo_Inserimento(con);
+	if(OggettiCasa[con]=="Vuoto")
+		cout<<"Nessun oggetto presente"<<endl;
+		uscita=1;
+	
+		
+	return uscita;
+	
+}
+int Controllo_Slot_Casa()
+{
+	int slot;
+	switch(TipoCasa)
+	{
+		case 0:
+			slot=1;
+			break;
+		case 1:
+			slot=3;
+			break;
+		case 2:
+			slot=4;
+			break;
+		case 3:
+			slot=5;
+			break;
+		case 4:
+			slot=6;
+			break;
+		case 5:
+			slot=7;
+			break;
+	}
+	return slot;
+}
+int Sistema_Casa_Deposita()
+{
+	system("cls");
+	int slot,inv,home,uscita;
+	cout<<"Qui si trova il nascondiglio di oggetti della tua casa"<<endl;
+	slot=Controllo_Slot_Casa();
+	cout<<"In questa casa sono disponibili"<<slot<<"Slot per contenere i tuoi oggetti"<<endl;
+	cout<<"Dovrai prima selezionare lo slot dell'inventario e successivamente quello nella casa"<<endl;
+	cout<<"SLOT CASA"<<endl;
+	Stampa_Slot_Casa();
+	cout<<"SLOT INVENTARIO"<<endl;
+	Stampa_Inventario();
+	
+	
+	cout<<"Inserisci il numero dello slot dell'inventario"<<endl;
+	inv=Controllo_Inserimento(slot);
+	cout<<"Inserisci il numero dello slot della casa"<<endl;
+	home=Controllo_Inserimento(9);
+	
+	OggettiCasa[home]=Inventario[inv];
+	Inventario[inv]="Vuoto";
+	
+	return uscita=1;
+}		
+int Sistema_Casa_Allenati()
+{
+	int Controllo=0,ra;
+	system("cls");
+	int slot=Controllo_Slot_Casa();
+	for(int count=0;count<slot;count++)
+	{
+		if(OggettiCasa[count]=="Pesi")
+			Controllo=1;
+		
+	}
+	if(Controllo==1)
+	{
+		
+		cout<<"Ti stai allenando consumando 5 punti energia"<<endl;
+		ra=rand()%1+5;	
+		cout<<"Hai guadagnato"<<ra<<"punti Abilitafisica."<<endl;
+		AbilitaF+=ra;
+	}
+	else 
+	{
+		cout<<"Non hai strumenti nella tua casa per allenarti"<<endl;
+		ra=1;
+		cout<<"Inserisci 1 per tornare nel menu casa"<<endl;
+		Controllo_Inserimento(ra);
+	}
+	
+}
+int Sistema_Casa_Studia()
+{
+    int comando=1;
+    system("cls");
+    if(Scuola==0)
+        cout<<"Non sei studente di nessuna scuola"<<endl;
+        cout<<"Premi il numero 1 e premi invio "<<endl;
+        Controllo_Inserimento(comando);
+        
+	
+}
+int Sistema_Gestione_Inventario()
+{
+	system("cls");
+	int com=2;
+	cout<<"COMANDI DI GESTIONE INVENTARIO"<<endl;
+	cout<<"[1]Sposta"<<endl;
+	cout<<"[2]Elimina"<<endl;
+	Stampa_Inventario();
+	cout<<endl;
+	com=Controllo_Inserimento(2);
+	switch(com)
+	{
+		case 1:
+			Sistema_Sposta();
+			break;
+		case 2:
+			Sistema_Elimina();
+			break;
+		
+	}
+	
+	cout<<"Inserisci 1 per tornare al menu casa"<<endl;
+	Controllo_Inserimento(1);
+	
+}
+int Sistema_Movimento()
+{
+	int com=15,rip=1,Uscita;
+	while (rip==1)
+{
+	
+	
+	Stampa_Movimento();
+	
+	com=Controllo_Inserimento(com);
+		
+		switch(com)
+	{
+		
+		case 1:
+			Uscita=0;
+			rip=2;
+			break;
+		case 2:																								
+			rip=Sistema_Movimento_Periferia();
+			break;
+		case 3:
+			rip=Sistema_Movimento_Centro();
+			break;
+		case 4:
+			rip=Sistema_Movimento_Banca();
+			break;
+		case 5:
+			rip=Sistema_Movimento_Energia();
+			break;
+		case 6:
+			rip=Sistema_Movimento_Attrezzi();
+			break;
+		case 7:
+			rip=Sistema_Movimento_Biciclette();
+			break;
+		case 8:
+			rip=Sistema_Movimento_Palestra();
+			break;
+		case 9:
+			rip=Sistema_Movimento_Concessionaria();
+			break;
+		case 10:
+			rip=Sistema_Movimento_Dipartimento();
+			break;
+		case 11:
+			rip=Sistema_Movimento_Casino();
+			break;
+		case 12:
+			rip=Sistema_Movimento_Parco();
+			break;
+		case 13:
+			rip=Sistema_Movimento_Chiesa();
+			break;
+		case 14:
+			rip=Sistema_Movimento_Terreni();
+			break;	
+		case 15:
+			Scheda_Personaggio();
+			break;		
+	}
+	
+}
+	
+	return Uscita;
+}
+void Stampa_Slot_Casa()
+{
+	int slot;
+	slot=Controllo_Slot_Casa();
+	for(int count=0;count<slot;count++)
+	{
+		if(OggettiCasa[count]=="")
+			OggettiCasa[count]="Vuoto";
+		cout<<"|"<<count<<"|"<<OggettiCasa[count]<<endl;
+	}
+}
+void Stampa_Inventario()
+{
+	int ordine=0;
+	for(int count=0;count<9;count++)
+	{
+		ordine++;
+		if(Inventario[count]==""&& Inventario_Q[count]<1) 
+			Inventario[count]="Vuoto";
+		if(ordine==2)
+			ordine=0;
+			
+			
+		cout<<"|"<<count<<"|"<<Inventario[count]<<"|Q:"<<Inventario_Q[count]<<endl;;
+	}
+}
+int Sistema_Salvataggio()
+{
+	
+}
+void Sistema_Sposta()
+{
+	int primo,secondo,temp;
+	cout<<"Inserisci la prima slot"<<endl;
+	primo=Controllo_Inserimento(8);
+	cout<<"Inserisci la seconda slot"<<endl;
+	secondo=Controllo_Inserimento(8);
+	
+	
+
+		
+		
+	///////////////////////////	INVERTO GLI OGGETTI DELL'INVENTARIO ///
+	Inventario[primo]=temp;
+	Inventario[primo]=Inventario[secondo];
+	Inventario[secondo]=temp;
+		///////////////////////////	INVERTO LE QUANTITA DEGLI OGGETTI ///
+	Inventario_Q[primo]=temp;
+	Inventario_Q[primo]=Inventario_Q[secondo];
+	Inventario_Q[secondo]=temp;
+	
+	cout<<"Spostate con successo"<<endl;
+	
+}
+void Sistema_Elimina()
+{
+	int com=8;
+	cout<<"Inserisci il numero della slot da eliminare "<<endl;
+	com=Controllo_Inserimento(com);
+	Inventario[com]="Vuoto";
+	Inventario_Q[com]=0;
+	cout<<"Slot Eliminata con successo"<<endl;
+}
+void Stampa_Movimento()
+{
+	system("cls");
+	Stampa_Logo();
+	cout<<"Benvenuto ,qui potrai muoverti per il resto della citta"<<endl;
+	cout<<"Camminare a piedi comporta un maggiore consumo di energia"<<endl;
+		cout<<"Azioni Disponibili"<<endl;
+	cout<<"[1]Torna a casa"<<endl;
+	cout<<"[2]Fai una giro in periferia"<<endl;
+	cout<<"[3]Fai da te"<<endl;
+	cout<<"[4]Banca"<<endl;
+	cout<<"[5]Negozio di energia"<<endl;
+	cout<<"[6]Negozio attrezzi"<<endl;
+	cout<<"[7]Negozio biciclette"<<endl;
+	cout<<"[8]Palestra"<<endl;
+	cout<<"[9]Concessionaria"<<endl;
+	cout<<"[10]Dipartimento di polizia"<<endl;
+	cout<<"[11]Casino"<<endl;
+	cout<<"[12]Parco"<<endl;
+	cout<<"[13]Chiesa"<<endl;
+	cout<<"[14]Terreni"<<endl;
+	cout<<"[15]SchedaPersonaggio"<<endl;
+	
+	
+	
+}
+int Sistema_Movimento_Periferia()
+{
+	int com=4,ra;//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Periferia();	
+	
+	com=Controllo_Inserimento(com);
+	
+	Controllo_Movimenti_Imprevisti(com);
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+int Sistema_Movimento_Centro()
+{ //////////fai da te
+	int com=//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Centro();	
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+int Sistema_Movimento_Banca()
+{
+	int com=3,denaro;//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Banca();
+	com=Controllo_Inserimento(com);	
+	switch(com)
+	{
+		case 1:
+			cout<<"Inserisci il denaro che vuoi depositare"<<endl;
+			cin>>denaro;
+			if(denaro>Denaro)
+			{
+				cout<<"Non possiedi questo denaro"<<endl;
+			}
+			else 
+			{
+				Conto=denaro;
+				Denaro=Denaro-denaro;
+				cout<<"Il denaro "<<denaro<<"e stato depositato nella banca"<<endl;
+			}
+			break;
+		case 2:
+			cout<<"Inserisci il denaro che vuoi ritirare dal tuo conto :";
+			cin>>denaro;
+			if(Conto<denaro)
+			{
+				cout<<"Non possiedi questo denaro nel tuo conto"<<endl;
+			}
+			else 
+			{
+				cout<<"Il denaro è stato ritirato con successo "<<endl;
+				Denaro=Denaro+Conto;
+				Conto=Conto-denaro;
+			}
+			break;
+		case 3:
+			cout<<"Il tuo conto attualmente contiene  :"<<Conto<<"$"<<endl;
+			break;
+	}
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+}
+int Sistema_Movimento_Energia()
+{
+	int com=3,con=0;//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Energia();	
+	com=Controllo_Inserimento(com);
+	switch(com)
+	{
+		case 1:
+			if(Denaro<50)
+				{
+					con=1;
+				}
+			else 
+			{
+				cout<<"Hai comprato una lattina piccola"<<endl;
+				Energia=Energia+100;
+				Denaro=Denaro-50;	
+			}
+				
+			
+				break;
+		case 2:
+			
+			if(Denaro<50)
+				{
+					con=1;
+				}
+			else 
+			{
+				cout<<"Hai comprato una lattina media"<<endl;
+			Energia=Energia+200;
+			Denaro=Denaro-100;
+			}
+			
+			break;
+		case 3:
+			
+			if(Denaro<50)
+				{
+					con=1;
+				}
+			else 
+			{
+				cout<<"Hai comprato una lattina grande"<<endl;
+			Energia=Energia+300;
+			Denaro=Denaro-200;
+			}
+			
+			break;
+			
+	}
+	if(con==1)
+	{
+		cout<<"Non hai abbastanza soldi"<<endl;	
+	}
+		
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+int Sistema_Movimento_Attrezzi()
+{
+	int com=//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Attrezzi();	
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+int Sistema_Movimento_Biciclette()
+{
+	int com=//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Biciclette();	
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+int Sistema_Movimento_Palestra()
+{
+	int com=//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Palestra();	
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+int Sistema_Movimento_Concessionaria()
+{
+	int com=//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Concessionaria();	
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+int Sistema_Movimento_Dipartimento()
+{
+	int com=//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Dipartimento();	
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+int Sistema_Movimento_Casino()
+{
+	int com=//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Casino();	
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+int Sistema_Movimento_Parco()
+{
+	int com=//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Parco();	
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+int Sistema_Movimento_Chiesa()
+{
+	int com=//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Chiesa();	
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+int Sistema_Movimento_Terreni()
+{
+	int com=//Numero di comandi del sistema;
+	system("cls");
+	Consumo_Energia();
+	Stampa_Movimento_Terreni();	
+	
+	
+	
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+}
+void Stampa_Movimento_Periferia()
+{
+	cout<<"Selezione il tuo comportamento"<<endl;
+	cout<<"[1]Spavaldo"<<endl;
+	cout<<"[2]Amichevole"<<endl;
+	cout<<"[3]Criminale"<<endl;
+	cout<<"[4]Gentile"<<endl;
+}
+void Stampa_Movimento_Centro()
+{
+	
+}
+void Stampa_Movimento_Banca()
+{
+	cout<<"Benvenuto nella banca della città"<<endl;
+	cout<<endl;
+	cout<<"[1]Deposita denaro"<<endl;
+	cout<<"[2]Ritira denaro"<<endl;
+	cout<<"[3]Verifica conto"<<endl;
+	cout<<"Inserisci il comando :";
+	
+}
+void Stampa_Movimento_Energia()
+{
+	cout<<"Distributore di energia"<<endl;
+	cout<<endl;
+	cout<<"|Comando|Prezzo|Energia|Lattina               |"<<endl;
+	cout<<"|1      |50    | 100   |Lattina piccola       |"<<endl;
+	cout<<"|2      |100   | 200   |Lattina media         |"<<endl;
+	cout<<"|3      |200   | 300   |Lattina grande        |"<<endl;
+	cout<<endl;
+	cout<<"Inserisci il comando :";
+	
+}
+void Stampa_Movimento_Attrezzi()
+{
+	/*
+	ID 			Oggetto
+	0			mazza				
+	1			cacciavite
+	2			pesi
+	3			libro principianti
+	4			libro intermedi
+	5			libro esperti
+	6			semi 1
+	7			semi 2
+	8			semi 3
+	9			lattina
+	10			bottiglia piccola
+	11			bottiglia media 
+	12			bottiglia grande
+	13			telefono 
+	14			metaldetector
+	15			metallo 
+	16			legno 
+	17			pistola
+	18			fucile
+	19			mitra
+	20			zaino piccolo
+	21			zaino medio 
+	22			zaino grande 
+	*/
+	
+	cout<<"Benvenuto nel negozio di attrezzi"<<endl;
+	cout<<endl;
+	cout<<"|Comando|Prezzo|Attrezzo       |"<<endl;
+	cout<<"|1      |50    |Mazza          |"<<endl;
+	cout<<"|2      |100   |Pesi           |"<<endl;
+	cout<<"|3      |50    |Cacciavite     |"<<endl;
+	cout<<"|4      |300   |Zaino piccolo  |"<<endl;
+	cout<<"|5      |450   |Zaino medio    |"<<endl;
+	cout<<"|6      |500   |Zaino grande   |"<<endl;
+	cout<<endl;
+	cout<<"Inserisci il comando :";
+}
+void Stampa_Movimento_Biciclette()
+{
+	
+}
+void Stampa_Movimento_Palestra()
+{
+	
+}
+void Stampa_Movimento_Concessionaria()
+{
+	
+}
+void Stampa_Movimento_Dipartimento()
+{
+	
+}
+void Stampa_Movimento_Casino()
+{
+	
+}
+void Stampa_Movimento_Parco()
+{
+	
+}
+void Stampa_Movimento_Chiesa()
+{
+	
+}
+void Stampa_Movimento_Terreni()
+{
+	
+}
+void Consumo_Energia()
+{
+	/*
+	ID         Veicolo
+	0			Piedi
+	
+	1			Bicidapasseggio
+	2			Bicidasterrato
+	3			Bicidacorsa
+	
+	4			Catorcio
+	5			auto d'epoca
+	6			utilitaria
+	7			sportiva
+	8			dacorsa
+	
+	*/
+	
+	switch(VeicoloID)
+	{
+		case 0:
+			Veicolo="Piedi";
+			Energia=Energia-10;
+			break;
+		case 1:
+			Veicolo="Bicidapasseggio";
+			Energia=Energia-9;
+			break;
+		case 2:
+			Veicolo="Bicidasterrato";
+			Energia=Energia-8;
+			break;
+		case 3:
+			Veicolo="Bicidacorsa";
+			Energia=Energia-7;
+			break;
+		case 4:
+			Veicolo="Catorcio";
+			Energia=Energia-6;
+			break;
+		case 5:
+			Veicolo="AutoAntica";
+			Energia=Energia-5;
+			break;
+		case 6:
+			Veicolo="AutoUtilitaria";
+			Energia=Energia-4;
+			break;
+		case 7:
+			Veicolo="AutoSportiva";
+			Energia=Energia-3;
+			break;
+		case 8:
+			Veicolo="AutoCorsa";
+			Energia=Energia-2;
+			break;
+	}
+}
+void Controllo_Movimenti_Imprevisti(int comportamento)
+{
+	switch(comportamento)
+	{
+		case 1:
+			Comportamento_Spavaldo();
+			break;
+		case 2:
+			Comportamento_Amichevole();
+			break;
+		case 3:
+			Comportamento_Criminale();
+			break;
+		case 4:
+			Comportamento_Gentile();
+			break;
+	}
+		
+}
+void Comportamento_Spavaldo()
+{
+	int ra,com=2;
+	ra=rand()%6+1;
+	switch(ra)
+	{
+		case 1:
+			cout<<"Hai trovato 5$ per terra,che fortuna!"<<endl;
+			Denaro=Denaro+5;
+			break;
+		case 2:
+			cout<<"Hai incontrato un barbone e gli hai lasciato 10$"<<endl;
+			Denaro=Denaro-5;
+			break;
+		case 3:
+			cout<<"Una signora ti ha chiesto di aiutarla,cosa vuoi fare?"<<endl;
+			cout<<"[1]Si."<<endl;
+			cout<<"[2]No."<<endl;
+			
+			com=Controllo_Inserimento(com);
+			if(com==1)
+			{
+				
+				ra=rand()%2+1;
+				if(ra==1)
+				{
+						cout<<"La signora ti ha mandato a quel paese e le vostre strade si sono divise"<<endl;
+				}
+				
+				else 
+					{
+						cout<<"La signora ti ha ricompensato per l'aiuto dandoti 10$"<<endl;
+					Denaro=Denaro+10;
+					}
+			}
+			else 
+			{
+				cout<<"Hai ignorato la signora"<<endl;
+				cout<<"Hai perso 2 Punti Rispetto"<<endl;
+				Rispetto=Rispetto-1;
+				
+			}
+			break;
+		case 4:
+			cout<<"Hai dato 5$ ad un barbone e lui per ricambiare ti ha regalato 5 Energia"<<endl;
+			Energia=Energia+5;
+			
+			break;
+		case 5:
+			cout<<"Due uomini con il cappuccio ti hanno derubato di 20$"<<endl;
+			Denaro=Denaro-20;
+			break;
+		case 6:
+			cout<<"Hai conosciuto 4 nuove persone ed hai guadagnato 5 Rispetto"<<endl;
+			Rispetto=Rispetto+5;
+			break;
+		case 7:
+			cout<<"";
+			break;
+		case 8:
+			break;
+		case 9:
+			break;
+		case 10:
+			break;
+		
+	}
+}
+void Comportamento_Amichevole()
+{
+	int ra,com=2;
+	ra=rand()%7+1;
+	switch(ra)
+	{
+		case 1:
+			cout<<"Hai fatto amicizia con un famoso artista locale"<<endl;
+			cout<<"Hai guadagnato 1 Rispetto"<<endl;
+			Rispetto=Rispetto+1;
+			break;
+		case 2:
+			cout<<"Due uomini ti hanno convinto a donare dei soldi per beneficenza"<<endl;
+			cout<<"Hai donato 5$"<<endl;
+			Denaro=Denaro-5;
+			break;
+		case 3:
+			cout<<"Una signora ti ha chiesto di aiutarla,cosa vuoi fare?"<<endl;
+			cout<<"[1]Si."<<endl;
+			cout<<"[2]No."<<endl;
+			
+			com=Controllo_Inserimento(com);
+			if(com==1)
+			{
+				
+				ra=rand()%2+1;
+				if(ra==1)
+				{
+						cout<<"La signora ti ha mandato a quel paese e le vostre strade si sono divise"<<endl;
+				}
+				
+				else 
+					{
+						cout<<"La signora ti ha ricompensato per l'aiuto dandoti 10$"<<endl;
+					Denaro=Denaro+10;
+					}
+			}
+			else 
+			{
+				cout<<"Hai ignorato la signora"<<endl;
+				cout<<"Hai perso 2 Punti Rispetto"<<endl;
+				Rispetto=Rispetto-1;
+				
+			}
+			break;
+		case 4:
+			cout<<"Hai conosciuto un signore al bar locale e ti ha offerto una birra"<<endl;
+			cout<<"Hai guadagnato 5 Energia"<<endl;
+			Energia=Energia+5;
+			
+			break;
+		case 5:
+			cout<<"Due uomini con il cappuccio ti hanno derubato di 20$"<<endl;
+			Denaro=Denaro-20;
+			break;
+		case 6:
+			cout<<"Hai conosciuto 4 nuove persone ed hai guadagnato 3 Rispetto"<<endl;
+			Rispetto=Rispetto+3;
+			break;
+		case 7:
+			cout<<"Hai incontrato un tuo vecchio amico poliziotto"<<endl;
+			cout<<"Il tuo livello di sospetto è diminuito di 5 Punti"<<endl;
+			Sospetto=Sospetto-1;
+			break;
+		case 8:
+			
+			break;
+		case 9:
+			break;
+		case 10:
+			break;
+		
+	}
+	
+}
+void Comportamento_Criminale()
+{
+	int ra,com=2;
+	ra=rand()%7+1;
+	switch(ra)
+	{
+		case 1:
+			cout<<"Hai Aggredito l'uomo sbagliato,ti ha ridotto davvero male"<<endl;
+			cout<<"Hai perso 10 PuntiSalute"<<endl;
+			Salute=Salute-10;
+			break;
+		case 2:
+			cout<<"Due uomini ti hanno convinto a donare dei soldi per beneficenza"<<endl;
+			cout<<"Hai donato 5$"<<endl;
+			Denaro=Denaro-5;
+			break;
+		case 3:
+			cout<<"Ad una signora è caduto il portafoglio,vuoi rubarlo?"<<endl;
+			cout<<"[1]Si."<<endl;
+			cout<<"[2]No."<<endl;
+			
+			com=Controllo_Inserimento(com);
+			if(com==1)
+			{
+				
+				ra=rand()%2+1;
+				if(ra==1)
+				{
+						ra=rand()%20+1;
+						cout<<"Sei riuscito a rubarlo trovando "<<ra<<"$"<<endl;
+						cout<<"Il tuo sospetto non è aumentato"<<endl;
+						Denaro=Denaro+ra;
+				}
+				
+				else 
+					{
+						cout<<"La signora si è accorta del furto e ti ha notato"<<endl;
+						cout<<"Il tuo livello di sospetto è aumentato di 5"<<endl;
+					Sospetto=Sospetto+5;
+					}
+			}
+			else 
+			{
+				cout<<"Forse hai fatto la scelta giusta,ti stavano guardando"<<endl;
+				
+				
+			}
+			break;
+		case 4:
+			cout<<"Hai rubato un cacciavite nel negozio degli attrezzi "<<endl;
+			cout<<"Inserisci il numero dello slot del tuo inventario dove depositarlo \n (Controlla che non sia già occupato)"<<endl;
+			Stampa_Inventario();
+			int com;
+			com=Controllo_Inserimento(8);
+			Inventario[com]="Cacciavite";
+			Inventario_Q[com]=1;
+			
+			Energia=Energia+5;
+			
+			break;
+		case 5:
+			cout<<"Hai pestato due ragazzi derubandoli di 20$"<<endl;
+			Denaro=Denaro+20;
+			break;
+		case 6:
+			cout<<"Hai fallito un rapina in un edicola "<<endl;
+			cout<<"Il tuo livello di sospetto è aumentato di 4"<<endl;
+			Sospetto=Sospetto+4;
+			break;
+		case 7:
+			cout<<"Degli agenti ti hanno ritenuto sospetto ed hanno effettuato una perquisizione su di te"<<endl;
+			cout<<"Ogni attrezzatura criminale è stata sequestrata"<<endl;
+			
+			break;
+		case 8:
+			
+			break;
+		case 9:
+			break;
+		case 10:
+			break;
+}
+}
+void Comportamento_Gentile()
+{
+	
+}
+void Scheda_Personaggio()
+{
+	int com;
+	system("cls");
+	cout<<"SCHEDA DEL TUO PERSONAGGIO"<<endl;
+	cout<<"Statistiche"<<endl;
+	cout<<"Salute:"<<Salute<<endl;
+	cout<<"Denaro:"<<Denaro<<endl;
+	cout<<"Sospetto:"<<Sospetto<<endl;
+	cout<<"Rispetto:"<<Rispetto<<endl;
+	cout<<"Livello apprendimento:"<<LivelloA<<endl;
+	cout<<"Abilita fisica:"<<AbilitaF<<endl;
+	cout<<"Energia:"<<Energia<<endl;
+	cout<<endl;
+	cout<<"INVENTARIO"<<endl;
+	Stampa_Inventario();
+	cout<<"STUDI"<<endl;
+	if(Scuola==0)
+		cout<<"Non frequenti scuola"<<endl;
+	cout<<endl;
+	cout<<"BENI"<<endl;
+	cout<<"Veicolo"<<Veicolo<<endl;
+	cout<<"Casa"<<TipoCasa<<endl;
+	cout<<"SLOT CASA"<<endl;
+	Stampa_Slot_Casa();
+	
+	cout<<"Premi 1 per tornare al menu movimento"<<endl;
+	com=1;
+	Controllo_Inserimento(com);
+	
+	
+	
+	
+
+
+	
+}
